@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/group.dart';
 
 ///Menu to navigate between groups and creating new group.
 class GroupsMenuWidget extends StatelessWidget {
-  ///Makes possible to create constant widget.
-  const GroupsMenuWidget({Key? key}) : super(key: key);
+  ///Groups list.
+  List<Group> groups;
+  ///Receives groups list.
+   GroupsMenuWidget({Key? key, required this.groups}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: const [
+        
         Text("Groups List"),
+        Divider(),
+
+        
       ],
     );
   }

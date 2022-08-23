@@ -10,18 +10,20 @@ class Task {
   String? description;
 
   ///Task's status (done/undone).
-  bool isDone = false;
+  bool? isDone = false;
 
-  ///Title of group where the task is сontained.
-  String? group;
+  ///Title of list where the task is сontained.
+  ///
+  ///"group" is a SQL key word, therefore the field has more complex form.
+  String? taskGroup;
 
   ///Creates task/todo instance with optional description field.
   Task({
     this.id,
     required this.title,
     this.description,
-    required this.isDone,
-    this.group,
+     this.isDone,
+    this.taskGroup,
   });
 
   ///Constructor receives data from DB and creates instance of this class.
@@ -30,7 +32,7 @@ class Task {
     title = map["title"] as String;
     description = map["description"] as String;
     isDone = map["isDone"] == 1; //TODO: try as bool
-    group = map["group"] as String;
+    taskGroup = map["taskGroup"] as String;
   }
 
   ///Creating map to transfer to DB.
@@ -39,7 +41,8 @@ class Task {
       "id": id,
       "title": title,
       "description": description,
-      "isDone": isDone == true ? 1 : 0,
+      "isDone": isDone ?? 1 ,
+      "taskGroup": taskGroup
     };
 
     return map;
@@ -51,21 +54,21 @@ class Task {
     String? title,
     String? description,
     bool? isDone,
-    String? group,
+    String? taskGroup,
   }) =>
       Task(
         id: id ?? this.id,
         isDone: isDone ?? this.isDone,
         title: title ?? this.title,
         description: description ?? this.description,
-        group: group ?? this.group,
+        taskGroup: taskGroup ?? this.taskGroup,
       );
 }
 
 ///Fields of Task Model which represent table's columns in DB.
 class TaskFields {
   ///List of fields which represent columns in DB.
-  static final List<String> values = [id, title, description, isDone, group];
+  static final List<String> values = [id, title, description, isDone, taskGroup];
 
   ///ID column.
   static const String id = 'id';
@@ -80,5 +83,7 @@ class TaskFields {
   static const String isDone = 'isDone';
 
   ///Group in which task is saved.
-  static const String group = 'group';
+  static const String taskGroup = 'taskGroup';
 }
+///Name of table for tasks.
+const String taskTableName = "tasks";
