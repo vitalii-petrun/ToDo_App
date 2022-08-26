@@ -10,7 +10,7 @@ class Task {
   String? description;
 
   ///Task's status (done/undone).
-  bool? isDone = false;
+  bool isDone = false;
 
   ///Title of list where the task is сontained.
   ///
@@ -22,7 +22,7 @@ class Task {
     this.id,
     required this.title,
     this.description,
-     this.isDone,
+    this.isDone = false,
     this.taskGroup,
   });
 
@@ -31,7 +31,7 @@ class Task {
     id = map["id"] as int;
     title = map["title"] as String;
     description = map["description"] as String;
-    isDone = map["isDone"] == 1; //TODO: try as bool
+    isDone = map["isDone"] == 1;
     taskGroup = map["taskGroup"] as String;
   }
 
@@ -41,7 +41,7 @@ class Task {
       "id": id,
       "title": title,
       "description": description,
-      "isDone": isDone ?? 1 ,
+      "isDone": isDone ? 1 : 0,
       "taskGroup": taskGroup
     };
 
@@ -68,7 +68,13 @@ class Task {
 ///Fields of Task Model which represent table's columns in DB.
 class TaskFields {
   ///List of fields which represent columns in DB.
-  static final List<String> values = [id, title, description, isDone, taskGroup];
+  static final List<String> values = [
+    id,
+    title,
+    description,
+    isDone,
+    taskGroup
+  ];
 
   ///ID column.
   static const String id = 'id';
@@ -85,5 +91,6 @@ class TaskFields {
   ///Group in which task is saved.
   static const String taskGroup = 'taskGroup';
 }
+
 ///Name of table for tasks.
 const String taskTableName = "tasks";

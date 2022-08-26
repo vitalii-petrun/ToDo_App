@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task.dart';
+import 'package:todo_app/providers/group_provider.dart';
 import 'package:todo_app/providers/task_provider.dart';
 
 ///Form to create new task.
 class AddTaskWidget extends StatefulWidget {
+//TODO объяснить поподробнее
   ///Makes possible to create constant widget.
   const AddTaskWidget({Key? key}) : super(key: key);
 
@@ -31,6 +33,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final groupProvider = Provider.of<GroupProvider>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -51,11 +55,12 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
           ),
           TextButton(
             onPressed: () {
+              Navigator.pop(context);
               Provider.of<TaskProvider>(context, listen: false).add(
                 Task(
                   title: titleBuff,
                   description: descrBuff,
-                  taskGroup: "Fiorentino",
+                  taskGroup: groupProvider.items[groupProvider.tabIndex].title,
                 ),
               );
             },

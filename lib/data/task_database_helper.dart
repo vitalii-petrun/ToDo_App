@@ -12,6 +12,7 @@ class TaskDatabaseHelper {
     final db = await DatabaseHelper.instance.database;
 
     final id = await db.insert(taskTableName, task.toMap());
+    print("id $id");
 
     return task.copy(id: id); //TODO исправить на сеттер для поля айди
   }

@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/data/Group_database_helper.dart';
-import 'package:todo_app/models/Group.dart';
+import 'package:todo_app/data/group_database_helper.dart';
+import 'package:todo_app/models/group.dart';
 
 ///Refreshes the screen when changes occur.
 class GroupProvider extends ChangeNotifier {
   List<Group> _items = [];
+  int _choosenTabID = 0;
+  set tabIndex(int newIndex) {
+    _choosenTabID = newIndex;
+    notifyListeners();
+  }
 
-  ///Getter for _items field.
-  List<Group> get items => [..._items];
+  int get tabIndex => _choosenTabID;
+
+  ///List of groups.
+  List<Group> get items => [..._items]; //TODO что за оператор?
 
   ///Reads all groups from table.
   Future<void> fetchAndSet() async {
@@ -17,9 +24,11 @@ class GroupProvider extends ChangeNotifier {
 
   ///Inserts new group to DB and to items list.
   Future add(Group group) async {
-    _items.insert(0, group);
+    Group temp;
+
+    temp = await GroupDatabaseHelper.instance.create(group);
+    _items.insert(_items.length, temp);
     notifyListeners();
-    await GroupDatabaseHelper.instance.create(group);
   }
 
   ///Updates group in DB and a list.

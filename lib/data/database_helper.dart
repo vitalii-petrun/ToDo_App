@@ -1,4 +1,5 @@
 import 'package:path/path.dart';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task.dart';
@@ -17,7 +18,7 @@ class DatabaseHelper {
     if (_database != null) return _database as Database;
 
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'testt.db');
+    final path = join(dbPath, 'eee.db');
 
     _database = await openDatabase(path, version: 1, onCreate: _createDB);
 
@@ -51,6 +52,8 @@ CREATE TABLE $taskTableName (
             )
           ''',
     );
+    //Default group "My tasks".
+    await db.insert(groupTableName, Group(id: 0, title: "My Tasks").toMap());
   }
 
   ///Method which closes DB.

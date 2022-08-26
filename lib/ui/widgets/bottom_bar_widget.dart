@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:todo_app/ui/widgets/custom_bottom_sheet_widget.dart';
 import 'package:todo_app/ui/widgets/groups_menu_widget.dart';
-import 'package:todo_app/ui/widgets/manage_group_widget.dart';
 
 ///Bottom bar with place for FAB.
 class BottomBarWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class BottomBarWidget extends StatelessWidget {
       child: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
               onPressed: () {
@@ -26,19 +26,6 @@ class BottomBarWidget extends StatelessWidget {
                   builder: (context) {
                     return const CustomBottomSheetWidget(
                       child: GroupsMenuWidget(),
-                    );
-                  },
-                );
-              },
-              icon: const Icon(Icons.menu),
-            ),
-            IconButton(
-              onPressed: () {
-                showModalBottomSheet<Widget>(
-                  context: context,
-                  builder: (context) {
-                    return const CustomBottomSheetWidget(
-                      child: ManageGroupWidget(),
                     );
                   },
                 );

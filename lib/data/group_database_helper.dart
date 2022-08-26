@@ -1,10 +1,11 @@
 import 'package:todo_app/data/database_helper.dart';
-import 'package:todo_app/models/Group.dart';
+import 'package:todo_app/models/group.dart';
 
 ///Group Table Helper.
 class GroupDatabaseHelper {
   ///Instance of GroupDatabaseHelper.
   static final GroupDatabaseHelper instance = GroupDatabaseHelper._init();
+  
   GroupDatabaseHelper._init();
 
   ///Inserts a [Group] object to DB.
