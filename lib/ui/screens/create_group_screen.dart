@@ -59,6 +59,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           ColoredBox(
             color: Theme.of(context).scaffoldBackgroundColor,
             child: TextFormField(
+              autofocus: true,
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: "Type group's title",

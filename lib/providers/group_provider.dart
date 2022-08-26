@@ -45,6 +45,7 @@ class GroupProvider extends ChangeNotifier {
   ///Deletes group by its id.
   Future delete(int id) async {
     _items.removeWhere((e) => e.id == id);
+    print(" deleted from _items");
     notifyListeners();
     await GroupDatabaseHelper.instance.delete(id);
   }

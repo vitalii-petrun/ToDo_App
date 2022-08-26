@@ -14,8 +14,6 @@ class GroupsMenuWidget extends StatefulWidget {
 class _GroupsMenuWidgetState extends State<GroupsMenuWidget> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<GroupProvider>(context, listen: false);
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -36,38 +34,41 @@ class _GroupsMenuWidgetState extends State<GroupsMenuWidget> {
               ],
             ),
           ),
-          Consumer<GroupProvider>(builder: (context, data, child) {
-            return provider.tabIndex == 0
-                ? const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text(
-                      "Default group cannot be deleted",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  )
-                : TextButton(
-                    onPressed: () {
-                      provider.delete(provider.tabIndex);
-                      Navigator.pop(context);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            "Delete this group",
-                            style: TextStyle(color: Colors.red),
+          Consumer<GroupProvider>(
+            builder: (context, provider, child) {
+              return provider.tabIndex == 0
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Text(
+                        "Default group cannot be deleted",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    )
+                  : TextButton(
+                      onPressed: () {
+                        provider.delete(provider.tabIndex);
+
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.delete,
+                            color: Colors.red,
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-          }),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              "Delete this group",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+            },
+          ),
         ],
       ),
     );

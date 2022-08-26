@@ -18,7 +18,7 @@ class DatabaseHelper {
     if (_database != null) return _database as Database;
 
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'eee.db');
+    final path = join(dbPath, 'hhkk.db');
 
     _database = await openDatabase(path, version: 1, onCreate: _createDB);
 

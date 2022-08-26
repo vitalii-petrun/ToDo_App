@@ -37,36 +37,45 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          TextFormField(
-            controller: _titleCtrl,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              hintText: "New task",
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          children: [
+            TextFormField(
+              autofocus: true,
+              controller: _titleCtrl,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: "New task",
+              ),
             ),
-          ),
-          TextFormField(
-            controller: _descriptionCtrl,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              hintText: "Additional info",
+            TextFormField(
+              controller: _descriptionCtrl,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: "Additional info",
+                hintStyle: TextStyle(fontSize: 15),
+              ),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Provider.of<TaskProvider>(context, listen: false).add(
-                Task(
-                  title: titleBuff,
-                  description: descrBuff,
-                  taskGroup: groupProvider.items[groupProvider.tabIndex].title,
-                ),
-              );
-            },
-            child: const Text("Save"),
-          )
-        ],
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Provider.of<TaskProvider>(context, listen: false).add(
+                    Task(
+                      title: titleBuff,
+                      description: descrBuff,
+                      taskGroup:
+                          groupProvider.items[groupProvider.tabIndex].title,
+                    ),
+                  );
+                },
+                child: const Text("Save"),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

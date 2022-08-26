@@ -45,13 +45,14 @@ class _TaskScreenState extends State<TaskScreen> {
         elevation: 1,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 15.0),
               child: TextFormField(
+                style: const TextStyle(fontSize: 20),
                 onChanged: (value) {
                   widget.task.title = value;
                   Provider.of<TaskProvider>(context, listen: false)
@@ -68,20 +69,21 @@ class _TaskScreenState extends State<TaskScreen> {
               children: [
                 const Expanded(child: Icon(Icons.notes)),
                 Expanded(
-                    flex: 6,
-                    child: TextFormField(
-                      minLines: 1,
-                      maxLines: 10,
-                      keyboardType: TextInputType.multiline,
-                      onChanged: (value) {
-                        widget.task.description = value;
-                      },
-                      initialValue: widget.task.description,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Add additional info",
-                      ),
-                    )),
+                  flex: 6,
+                  child: TextFormField(
+                    minLines: 1,
+                    maxLines: 10,
+                    keyboardType: TextInputType.multiline,
+                    onChanged: (value) {
+                      widget.task.description = value;
+                    },
+                    initialValue: widget.task.description,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Add additional info",
+                    ),
+                  ),
+                ),
               ],
             ),
             Row(
@@ -91,7 +93,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   backgroundColor:
                       widget.task.isDone ? Colors.lime : Colors.redAccent,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Chip(label: Text(widget.task.taskGroup ?? ""))

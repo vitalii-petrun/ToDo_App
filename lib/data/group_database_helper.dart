@@ -59,11 +59,14 @@ class GroupDatabaseHelper {
   ///Method deletes [Group] object by its id.
   Future<int> delete(int id) async {
     final db = await DatabaseHelper.instance.database;
-
-    return db.delete(
+    print(id);
+   int a = await db.delete(
       groupTableName,
       where: '${GroupFields.id} = ?',
       whereArgs: [id],
     );
+    print("affected rows: $a");
+
+    return a;
   }
 }

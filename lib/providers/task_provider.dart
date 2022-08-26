@@ -40,19 +40,10 @@ class TaskProvider extends ChangeNotifier {
   ///Changes isDone status.
   Future changeStatus(Task task) async {
     final index = _items.indexWhere((task) => task.id == task.id);
-    print(
-        "isDONE in changeStatus BEFORE: ${_items[index].isDone} for ${task.title}");
     if (index != -1) {
-      print(
-          "isDONE in changeStatus BEFORE update (task): ${task.isDone} for ${task.title} ");
       task.isDone = !task.isDone;
-
       await TaskDatabaseHelper.instance.update(task);
       notifyListeners();
-      print(
-          "isDONE in changeStatus AFTER update (items.indexs): ${_items[index].isDone} for  ${task.title}");
-      print(
-          "isDONE in changeStatus AFTER update (task): ${task.isDone} for ${task.title} ");
     }
   }
 

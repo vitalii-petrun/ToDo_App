@@ -13,7 +13,7 @@ class TaskListWidget extends StatelessWidget {
       TextStyle(decoration: TextDecoration.lineThrough);
 
   ///Widget receives list of tasks and display them.
-  TaskListWidget({Key? key, required this.tasks}) : super(key: key);
+  const TaskListWidget({Key? key, required this.tasks}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,10 @@ class TaskListWidget extends StatelessWidget {
                     provider.changeStatus(tasks[index]);
                   },
                   child: tasks[index].isDone
-                      ? const Icon(Icons.done)
+                      ? Icon(
+                          Icons.done,
+                          color: Theme.of(context).primaryColorDark,
+                        )
                       : const Icon(Icons.circle_outlined),
                 ),
                 title: Text(
