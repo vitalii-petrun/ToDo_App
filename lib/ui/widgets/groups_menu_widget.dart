@@ -46,7 +46,7 @@ class _GroupsMenuWidgetState extends State<GroupsMenuWidget> {
                     )
                   : TextButton(
                       onPressed: () {
-                        provider.delete(provider.tabIndex);
+                        provider.delete(provider.items[provider.tabIndex].id);
 
                         Navigator.pop(context);
                       },

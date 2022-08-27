@@ -21,9 +21,8 @@ class TaskProvider extends ChangeNotifier {
 
   ///Inserts new task to DB and to items list.
   Future add(Task task) async {
-    Task temp; //temporary variable to receive task with id from create() method
-    temp = await TaskDatabaseHelper.instance.create(task);
-    _items.insert(0, temp);
+    await TaskDatabaseHelper.instance.create(task);
+    _items.insert(0, task);
     notifyListeners();
   }
 
@@ -50,6 +49,7 @@ class TaskProvider extends ChangeNotifier {
   ///Deletes task by its id.
   Future delete(int id) async {
     _items.removeWhere((e) => e.id == id);
+
     notifyListeners();
     await TaskDatabaseHelper.instance.delete(id);
   }

@@ -1,7 +1,7 @@
 ///Simple task or todo element description.
 class Task {
   ///Task's id.
-  int? id;
+  int id = -1;
 
   ///Task's title.
   String title = "no_title";
@@ -19,7 +19,7 @@ class Task {
 
   ///Creates task/todo instance with optional description field.
   Task({
-    this.id,
+    required this.id,
     required this.title,
     this.description,
     this.isDone = false,

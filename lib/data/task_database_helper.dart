@@ -8,13 +8,10 @@ class TaskDatabaseHelper {
   TaskDatabaseHelper._init();
 
   ///Inserts a [Task] object to DB.
-  Future<Task> create(Task task) async {
+  Future create(Task task) async {
     final db = await DatabaseHelper.instance.database;
 
-    final id = await db.insert(taskTableName, task.toMap());
-    print("id $id");
-
-    return task.copy(id: id); //TODO исправить на сеттер для поля айди
+    await db.insert(taskTableName, task.toMap());
   }
 
   ///Method returns a single [Task] object from Database by its ID.

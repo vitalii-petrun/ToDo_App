@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/providers/group_provider.dart';
 import 'package:todo_app/providers/task_provider.dart';
 
+///Screen showed while data is loading.
 class LoadingScreen extends StatefulWidget {
+  ///Creates const screen.
   const LoadingScreen({Key? key}) : super(key: key);
 
   @override

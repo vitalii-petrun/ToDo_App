@@ -39,8 +39,12 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Provider.of<GroupProvider>(context, listen: false)
-                  .add(Group(title: _titleBuff));
+              Provider.of<GroupProvider>(context, listen: false).add(
+                Group(
+                  id: DateTime.now().millisecondsSinceEpoch,
+                  title: _titleBuff,
+                ),
+              );
               Navigator.pop(context);
             },
             child: const Text("Done"),

@@ -5,8 +5,11 @@ import 'package:todo_app/providers/task_provider.dart';
 
 ///Screen which opens when user select edit on sliding task/todo item
 class TaskScreen extends StatefulWidget {
+  //Task
+  ///Task which details will be displayed.
   final Task task;
 
+  ///Constructor receives Task oblect.
   const TaskScreen({Key? key, required this.task}) : super(key: key);
 
   @override
@@ -14,6 +17,8 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
+  final _descrFieldFlexValue = 6;
+  final _descrFieldMaxLines = 10;
   @override
   void initState() {
     super.initState();
@@ -32,7 +37,7 @@ class _TaskScreenState extends State<TaskScreen> {
           TextButton(
             onPressed: () {
               Provider.of<TaskProvider>(context, listen: false)
-                  .delete(widget.task.id as int);
+                  .delete(widget.task.id);
               Navigator.pop(context);
             },
             child: const Icon(
@@ -69,10 +74,10 @@ class _TaskScreenState extends State<TaskScreen> {
               children: [
                 const Expanded(child: Icon(Icons.notes)),
                 Expanded(
-                  flex: 6,
+                  flex: _descrFieldFlexValue,
                   child: TextFormField(
                     minLines: 1,
-                    maxLines: 10,
+                    maxLines: _descrFieldMaxLines,
                     keyboardType: TextInputType.multiline,
                     onChanged: (value) {
                       widget.task.description = value;

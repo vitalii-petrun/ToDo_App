@@ -5,30 +5,41 @@ import 'package:todo_app/models/group.dart';
 ///Refreshes the screen when changes occur.
 class GroupProvider extends ChangeNotifier {
   List<Group> _items = [];
-  int _choosenTabID = 0;
+  int _choosenTabIndex = 0;
+
+  ///Setter for _choosenTabIndex field.
   set tabIndex(int newIndex) {
-    _choosenTabID = newIndex;
+    _choosenTabIndex = newIndex;
+
     notifyListeners();
   }
 
-  int get tabIndex => _choosenTabID;
+  ///Setter for _choosenTabIndex which can be called in didUpdateWidget().
+  ///
+  ///It doesn't call setState while second setter does.
+  set tabIndexAfterRebuild(int newIndex) {
+    _choosenTabIndex = newIndex;
+  }
+
+  ///Getter for _choosenTabIndex field.
+  int get tabIndex => _choosenTabIndex;
 
   ///List of groups.
-  List<Group> get items => [..._items]; //TODO что за оператор?
+  List<Group> get items => [..._items];
 
   ///Reads all groups from table.
   Future<void> fetchAndSet() async {
     _items = await GroupDatabaseHelper.instance.readAll();
+
     notifyListeners();
   }
 
   ///Inserts new group to DB and to items list.
   Future add(Group group) async {
-    Group temp;
+    _items.insert(_items.length, group);
 
-    temp = await GroupDatabaseHelper.instance.create(group);
-    _items.insert(_items.length, temp);
     notifyListeners();
+    await GroupDatabaseHelper.instance.create(group);
   }
 
   ///Updates group in DB and a list.
@@ -45,8 +56,9 @@ class GroupProvider extends ChangeNotifier {
   ///Deletes group by its id.
   Future delete(int id) async {
     _items.removeWhere((e) => e.id == id);
-    print(" deleted from _items");
+
     notifyListeners();
+
     await GroupDatabaseHelper.instance.delete(id);
   }
 }

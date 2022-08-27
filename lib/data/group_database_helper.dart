@@ -5,16 +5,14 @@ import 'package:todo_app/models/group.dart';
 class GroupDatabaseHelper {
   ///Instance of GroupDatabaseHelper.
   static final GroupDatabaseHelper instance = GroupDatabaseHelper._init();
-  
+
   GroupDatabaseHelper._init();
 
   ///Inserts a [Group] object to DB.
-  Future<Group> create(Group group) async {
+  Future create(Group group) async {
     final db = await DatabaseHelper.instance.database;
 
-    final id = await db.insert(groupTableName, group.toMap());
-
-    return group.copy(id: id); //TODO исправить на сеттер для поля айди
+    await db.insert(groupTableName, group.toMap());
   }
 
   ///Method returns a single [Group] object from Database by its ID.
@@ -57,16 +55,13 @@ class GroupDatabaseHelper {
   }
 
   ///Method deletes [Group] object by its id.
-  Future<int> delete(int id) async {
+  Future delete(int id) async {
     final db = await DatabaseHelper.instance.database;
-    print(id);
-   int a = await db.delete(
+
+    await db.delete(
       groupTableName,
       where: '${GroupFields.id} = ?',
       whereArgs: [id],
     );
-    print("affected rows: $a");
-
-    return a;
   }
 }

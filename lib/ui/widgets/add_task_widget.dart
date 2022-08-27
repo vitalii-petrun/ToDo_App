@@ -6,7 +6,6 @@ import 'package:todo_app/providers/task_provider.dart';
 
 ///Form to create new task.
 class AddTaskWidget extends StatefulWidget {
-//TODO объяснить поподробнее
   ///Makes possible to create constant widget.
   const AddTaskWidget({Key? key}) : super(key: key);
 
@@ -64,6 +63,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                   Navigator.pop(context);
                   Provider.of<TaskProvider>(context, listen: false).add(
                     Task(
+                      id: DateTime.now().millisecondsSinceEpoch,
                       title: titleBuff,
                       description: descrBuff,
                       taskGroup:

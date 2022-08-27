@@ -18,6 +18,7 @@ class TaskListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<TaskProvider>(context, listen: false);
+    const double _splashRadius = 20;
 
     return ListView.builder(
       itemCount: tasks.length,
@@ -28,13 +29,13 @@ class TaskListWidget extends StatelessWidget {
             motion: const ScrollMotion(),
             dismissible: DismissiblePane(
               onDismissed: () {
-                provider.delete(tasks[index].id as int);
+                provider.delete(tasks[index].id);
               },
             ),
             children: [
               SlidableAction(
                 onPressed: (_) {
-                  provider.delete(tasks[index].id as int);
+                  provider.delete(tasks[index].id);
                 },
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
@@ -58,7 +59,7 @@ class TaskListWidget extends StatelessWidget {
                 },
                 leading: InkWell(
                   splashColor: Colors.grey,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(_splashRadius),
                   onTap: () {
                     provider.changeStatus(tasks[index]);
                   },

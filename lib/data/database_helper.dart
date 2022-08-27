@@ -18,7 +18,7 @@ class DatabaseHelper {
     if (_database != null) return _database as Database;
 
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'hhkk.db');
+    final path = join(dbPath, 'silicon2.db');
 
     _database = await openDatabase(path, version: 1, onCreate: _createDB);
 
@@ -29,7 +29,7 @@ class DatabaseHelper {
   DatabaseHelper._init();
 
   Future _createDB(Database db, int _) async {
-    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    const idType = 'INTEGER PRIMARY KEY';
     const textType = 'TEXT NOT NULL';
     const textTypeNull = 'TEXT';
     const boolType = 'BOOLEAN NOT NULL';
@@ -47,8 +47,8 @@ CREATE TABLE $taskTableName (
     await db.execute(
       '''
             CREATE TABLE $groupTableName (
-              ${GroupFields.id} INTEGER PRIMARY KEY AUTOINCREMENT,
-              ${GroupFields.title} TEXT
+              ${GroupFields.id} idType,
+              ${GroupFields.title} $textTypeNull
             )
           ''',
     );

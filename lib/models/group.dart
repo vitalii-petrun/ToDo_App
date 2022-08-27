@@ -1,14 +1,14 @@
 ///Group description.
 class Group {
   ///Group's id.
-  int? id;
+  int id = -1;
 
   ///Group's title.
   String title = "no_title";
 
   ///Group constructor.
   Group({
-    this.id,
+    required this.id,
     required this.title,
   });
 
@@ -53,5 +53,6 @@ class GroupFields {
   ///Title column.
   static const String title = 'title';
 }
+
 ///Name of table for groups.
 const String groupTableName = "groups";
