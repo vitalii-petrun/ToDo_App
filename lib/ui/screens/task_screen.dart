@@ -5,11 +5,11 @@ import 'package:todo_app/providers/task_provider.dart';
 
 ///Screen which opens when user select edit on sliding task/todo item
 class TaskScreen extends StatefulWidget {
-  //Task
+
   ///Task which details will be displayed.
   final Task task;
 
-  ///Constructor receives Task oblect.
+  ///Constructor receives Task object.
   const TaskScreen({Key? key, required this.task}) : super(key: key);
 
   @override
@@ -30,14 +30,16 @@ class _TaskScreenState extends State<TaskScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            context.read<TaskProvider>().update(widget.task);
+            Navigator.pop(context);
+          },
           color: Colors.black,
         ),
         actions: [
           TextButton(
             onPressed: () {
-              Provider.of<TaskProvider>(context, listen: false)
-                  .delete(widget.task.id);
+              context.read<TaskProvider>().delete(widget.task.id);
               Navigator.pop(context);
             },
             child: const Icon(
@@ -60,8 +62,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 style: const TextStyle(fontSize: 20),
                 onChanged: (value) {
                   widget.task.title = value;
-                  Provider.of<TaskProvider>(context, listen: false)
-                      .update(widget.task);
+                  context.read<TaskProvider>().update(widget.task);
                 },
                 initialValue: widget.task.title,
                 decoration: const InputDecoration(
@@ -94,14 +95,18 @@ class _TaskScreenState extends State<TaskScreen> {
             Row(
               children: [
                 Chip(
-                  label: Text(widget.task.isDone ? "Done" : "Not done"),
-                  backgroundColor:
-                      widget.task.isDone ? Colors.lime : Colors.redAccent,
+                  label: Text(widget.task.taskGroup ?? ""),
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 20),
                 ),
                 const SizedBox(
                   width: 5,
                 ),
-                Chip(label: Text(widget.task.taskGroup ?? ""))
+                Chip(
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  label: Text(widget.task.isDone ? "Done" : "Not done"),
+                  backgroundColor:
+                      widget.task.isDone ? Colors.lime : Colors.redAccent,
+                ),
               ],
             ),
           ],

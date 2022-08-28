@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:todo_app/ui/widgets/custom_bottom_sheet_widget.dart';
+
 import 'package:todo_app/ui/widgets/groups_menu_widget.dart';
 
 ///Bottom bar with place for FAB.
 class BottomBarWidget extends StatelessWidget {
-  static const double _barHeight = 60;
+  static const double _barHeight = 50;
 
-  ///Makes possible to create constant widget.
+  ///Creates constant widget.
   const BottomBarWidget({Key? key}) : super(key: key);
 
   @override

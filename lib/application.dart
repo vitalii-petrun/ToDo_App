@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/providers/group_provider.dart';
 import 'package:todo_app/providers/task_provider.dart';
@@ -10,6 +11,14 @@ import 'package:todo_app/ui/screens/loading_screen.dart';
 class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Theme.of(context).scaffoldBackgroundColor,
+        systemNavigationBarColor: Theme.of(context).bottomAppBarColor,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => TaskProvider()),

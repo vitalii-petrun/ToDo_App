@@ -16,8 +16,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     Future.wait([
-      Provider.of<TaskProvider>(context, listen: false).fetchAndSet(),
-      Provider.of<GroupProvider>(context, listen: false).fetchAndSet()
+      context.read<TaskProvider>().fetchAndSet(),
+      context.read<GroupProvider>().fetchAndSet()
     ]).whenComplete(
       () => Navigator.pushReplacementNamed(context, "/home_screen"),
     );

@@ -18,7 +18,7 @@ class DatabaseHelper {
     if (_database != null) return _database as Database;
 
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'silicon2.db');
+    final path = join(dbPath, 'tasks.db');
 
     _database = await openDatabase(path, version: 1, onCreate: _createDB);
 
@@ -53,7 +53,7 @@ CREATE TABLE $taskTableName (
           ''',
     );
     //Default group "My tasks".
-    await db.insert(groupTableName, Group(id: 0, title: "My Tasks").toMap());
+    await db.insert(groupTableName, Group(id: 0, title: "My tasks").toMap());
   }
 
   ///Method which closes DB.

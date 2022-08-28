@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 ///Custom bottom sheet with padding for keyboard.
 class CustomBottomSheetWidget extends StatelessWidget {
-
   ///The widget below this widget in the tree.
   final Widget child;
 

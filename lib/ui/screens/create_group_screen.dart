@@ -5,7 +5,7 @@ import 'package:todo_app/providers/group_provider.dart';
 
 ///Screen for creating new group.
 class CreateGroupScreen extends StatefulWidget {
-  ///Makes possible to create constant screen.
+  ///Creates constant screen.
   const CreateGroupScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,7 +14,6 @@ class CreateGroupScreen extends StatefulWidget {
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
   final _titleCtrl = TextEditingController();
-
   String _titleBuff = "";
 
   @override
@@ -39,13 +38,13 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Provider.of<GroupProvider>(context, listen: false).add(
-                Group(
-                  id: DateTime.now().millisecondsSinceEpoch,
-                  title: _titleBuff,
-                ),
-              );
               Navigator.pop(context);
+              context.read<GroupProvider>().add(
+                    Group(
+                      id: DateTime.now().millisecondsSinceEpoch,
+                      title: _titleBuff,
+                    ),
+                  );
             },
             child: const Text("Done"),
           ),
@@ -63,6 +62,15 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           ColoredBox(
             color: Theme.of(context).scaffoldBackgroundColor,
             child: TextFormField(
+              onFieldSubmitted: (title) {
+                Navigator.pop(context);
+                context.read<GroupProvider>().add(
+                      Group(
+                        id: DateTime.now().millisecondsSinceEpoch,
+                        title: title,
+                      ),
+                    );
+              },
               autofocus: true,
               decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -70,7 +78,6 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 contentPadding: EdgeInsets.only(left: 10),
               ),
               controller: _titleCtrl,
-              //initialValue: "Type group name",
             ),
           ),
         ],

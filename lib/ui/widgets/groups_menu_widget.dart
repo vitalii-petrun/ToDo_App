@@ -3,15 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/providers/group_provider.dart';
 
 ///Menu to navigate between groups and creating new group.
-class GroupsMenuWidget extends StatefulWidget {
+class GroupsMenuWidget extends StatelessWidget {
   ///Receives groups list.
   const GroupsMenuWidget({Key? key}) : super(key: key);
 
-  @override
-  State<GroupsMenuWidget> createState() => _GroupsMenuWidgetState();
-}
-
-class _GroupsMenuWidgetState extends State<GroupsMenuWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,11 +20,16 @@ class _GroupsMenuWidgetState extends State<GroupsMenuWidget> {
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.add),
+              children: [
+                const Icon(Icons.add),
                 Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: Text("Create new group"),
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text(
+                    "Create new group",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                  ),
                 ),
               ],
             ),

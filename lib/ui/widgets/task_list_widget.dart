@@ -11,16 +11,18 @@ class TaskListWidget extends StatelessWidget {
   final List<Task> tasks;
   static const _doneStatusStyle =
       TextStyle(decoration: TextDecoration.lineThrough);
+  static const double _splashRadius = 20;
+  static const _subtitleMaxLines = 2;
 
   ///Widget receives list of tasks and display them.
   const TaskListWidget({Key? key, required this.tasks}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<TaskProvider>(context, listen: false);
-    const double _splashRadius = 20;
+    final provider = context.read<TaskProvider>();
 
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: tasks.length,
       itemBuilder: (context, index) {
         return Slidable(
@@ -76,7 +78,8 @@ class TaskListWidget extends StatelessWidget {
                 ),
                 subtitle: Text(
                   tasks[index].description ?? "",
-                  style: tasks[index].isDone ? _doneStatusStyle : null,
+                  maxLines: _subtitleMaxLines,
+                  overflow: TextOverflow.ellipsis,
                 ),
               );
             },

@@ -6,7 +6,7 @@ import 'package:todo_app/providers/task_provider.dart';
 
 ///Form to create new task.
 class AddTaskWidget extends StatefulWidget {
-  ///Makes possible to create constant widget.
+  ///Create constant widget.
   const AddTaskWidget({Key? key}) : super(key: key);
 
   @override
@@ -19,6 +19,9 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   String titleBuff = "";
   String descrBuff = "";
+
+  //Toggle for "Additional info" field.
+  bool _isActivated = false;
   @override
   void initState() {
     _titleCtrl.addListener(() {
@@ -32,7 +35,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    final groupProvider = context.read<GroupProvider>();
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -41,6 +44,20 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
         child: Column(
           children: [
             TextFormField(
+              onFieldSubmitted: (title) {
+                if (!_isActivated) {
+                  context.read<TaskProvider>().add(
+                        Task(
+                          id: DateTime.now().millisecondsSinceEpoch,
+                          title: title,
+                          description: descrBuff,
+                          taskGroup:
+                              groupProvider.items[groupProvider.tabIndex].title,
+                        ),
+                      );
+                  Navigator.pop(context);
+                }
+              },
               autofocus: true,
               controller: _titleCtrl,
               decoration: const InputDecoration(
@@ -48,31 +65,62 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                 hintText: "New task",
               ),
             ),
-            TextFormField(
-              controller: _descriptionCtrl,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: "Additional info",
-                hintStyle: TextStyle(fontSize: 15),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
+            if (_isActivated)
+              TextFormField(
+                onFieldSubmitted: (description) {
+                  context.read<TaskProvider>().add(
+                        Task(
+                          id: DateTime.now().millisecondsSinceEpoch,
+                          title: titleBuff,
+                          description: description,
+                          taskGroup:
+                              groupProvider.items[groupProvider.tabIndex].title,
+                        ),
+                      );
                   Navigator.pop(context);
-                  Provider.of<TaskProvider>(context, listen: false).add(
-                    Task(
-                      id: DateTime.now().millisecondsSinceEpoch,
-                      title: titleBuff,
-                      description: descrBuff,
-                      taskGroup:
-                          groupProvider.items[groupProvider.tabIndex].title,
-                    ),
-                  );
                 },
-                child: const Text("Save"),
+                controller: _descriptionCtrl,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Additional info",
+                  hintStyle: TextStyle(fontSize: 15),
+                ),
               ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _isActivated = true;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.notes,
+                    color: Theme.of(context).primaryColorDark,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.read<TaskProvider>().add(
+                          Task(
+                            id: DateTime.now().millisecondsSinceEpoch,
+                            title: titleBuff,
+                            description: descrBuff,
+                            taskGroup: groupProvider
+                                .items[groupProvider.tabIndex].title,
+                          ),
+                        );
+                  },
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                  ),
+                ),
+              ],
             )
           ],
         ),
